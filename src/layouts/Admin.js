@@ -15,6 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
 import React from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
@@ -26,9 +27,13 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
 
+require("dotenv").config();
+
 const Admin = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+
+  console.log(process.env.REACT_APP_API_URL);
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;

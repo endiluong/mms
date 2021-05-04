@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 
 import { userState } from "atoms/user.atom";
@@ -23,10 +23,14 @@ import {
 const Login = () => {
   const history = useHistory();
   const setUser = useSetRecoilState(userState);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({});
 
-  const handleSignIn = async () => {};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  };
 
-  const handleSocialSignIn = async () => {};
+  // const handleSocialSignIn = async () => {};
 
   return (
     <>
@@ -86,9 +90,11 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Email"
-                    type="email"
-                    autoComplete="new-email"
+                    placeholder="Username"
+                    type="text"
+                    onChange={(event) =>
+                      setFormData({ ...formData, username: event.target.value })
+                    }
                   />
                 </InputGroup>
               </FormGroup>
@@ -102,7 +108,9 @@ const Login = () => {
                   <Input
                     placeholder="Password"
                     type="password"
-                    autoComplete="new-password"
+                    onChange={(event) =>
+                      setFormData({ ...formData, password: event.target.value })
+                    }
                   />
                 </InputGroup>
               </FormGroup>
@@ -111,6 +119,12 @@ const Login = () => {
                   className="custom-control-input"
                   id=" customCheckLogin"
                   type="checkbox"
+                  onChange={(event) =>
+                    setFormData({
+                      ...formData,
+                      rememberMe: event.target.checked,
+                    })
+                  }
                 />
                 <label
                   className="custom-control-label"
@@ -120,7 +134,12 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button
+                  className="my-4"
+                  color="primary"
+                  type="button"
+                  onClick={handleSubmit}
+                >
                   Sign in
                 </Button>
               </div>

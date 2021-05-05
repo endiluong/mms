@@ -19,6 +19,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { login } from "boostrap/auth";
 
 const Login = () => {
   const history = useHistory();
@@ -28,6 +29,11 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const result = await login(formData);
+    console.log(
+      "🚀 ~ file: Login.js ~ line 33 ~ handleSubmit ~ result",
+      result
+    );
   };
 
   // const handleSocialSignIn = async () => {};
@@ -146,26 +152,6 @@ const Login = () => {
             </Form>
           </CardBody>
         </Card>
-        <Row className="mt-3">
-          <Col xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Forgot password?</small>
-            </a>
-          </Col>
-          <Col className="text-right" xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Create new account</small>
-            </a>
-          </Col>
-        </Row>
       </Col>
     </>
   );

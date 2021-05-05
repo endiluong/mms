@@ -8,6 +8,7 @@ const axiosClient = axios.create({
     Accept: "application/json",
     "Content-Type": "application/json; charset=utf-8",
   },
+
   validateStatus: (status) => {
     return status >= 200 && status < 2000;
   },

@@ -26,7 +26,7 @@ export async function logout() {
   try {
     const result = await axiosClient({
       method: "GET",
-      url: `${process.env.REACT_APP_API_BACKEND}/logout`,
+      url: `${process.env.REACT_APP_API_URL}/logout`,
     });
 
     if (result.status === 200) {
@@ -47,13 +47,13 @@ export async function login(args) {
   try {
     const result = await axiosClient({
       method: "POST",
-      url: `${process.env.REACT_APP_API_BACKEND}/login`,
+      url: `${process.env.REACT_APP_API_URL}/api/login`,
       data: JSON.stringify({ payload }),
     });
 
     if (result.status !== 200) return false;
 
-    const { access_token = "" } = result.data.data;
+    const { access_token = "" } = result.data;
     return access_token;
   } catch (error) {
     console.log(error);

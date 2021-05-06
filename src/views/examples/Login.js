@@ -18,8 +18,11 @@ import {
   InputGroup,
   Row,
   Col,
+  Spinner,
+  FormFeedback,
 } from "reactstrap";
 import { login } from "boostrap/auth";
+import { setAccessToken } from "../../boostrap/auth";
 
 const Login = () => {
   const history = useHistory();
@@ -29,63 +32,40 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const result = await login(formData);
-    console.log(
-      "🚀 ~ file: Login.js ~ line 33 ~ handleSubmit ~ result",
-      result
-    );
-  };
+    setLoading(true);
+    const result = await login({
+      payload: {
+        username: formData.username,
+        password: formData.password,
+      },
+    });
+    // Process Access token
 
-  // const handleSocialSignIn = async () => {};
+    if (result.code === 200) {
+      setLoading(false);
+      const { accessToken, id, roles } = result;
+      if (accessToken) {
+        setAccessToken(accessToken);
+      }
+
+      // fetch user info
+      setUser(result);
+      // save role list
+
+      // navigate
+      history.push("/admin");
+    } else {
+      // toast error
+    }
+  };
 
   return (
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
-          {/* <CardHeader className="bg-transparent pb-5">
-            <div className="text-muted text-center mt-2 mb-3">
-              <small>Sign in with</small>
-            </div>
-            <div className="btn-wrapper text-center">
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/github.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Github</span>
-              </Button>
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/google.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Google</span>
-              </Button>
-            </div>
-          </CardHeader> */}
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <small>Sign in with credentials</small>
+              <small>Đăng nhập bằng tài khoản được cung cấp</small>
             </div>
             <Form role="form">
               <FormGroup className="mb-3">
@@ -96,12 +76,16 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Username"
+                    placeholder="Tên đăng nhập"
                     type="text"
+                    required
                     onChange={(event) =>
                       setFormData({ ...formData, username: event.target.value })
                     }
                   />
+                  <FormFeedback>
+                    Oh noes! that name is already taken
+                  </FormFeedback>
                 </InputGroup>
               </FormGroup>
               <FormGroup>
@@ -112,12 +96,16 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Password"
+                    placeholder="Mật khẩu"
                     type="password"
+                    required
                     onChange={(event) =>
                       setFormData({ ...formData, password: event.target.value })
                     }
                   />
+                  <FormFeedback>
+                    Oh noes! that name is already taken
+                  </FormFeedback>
                 </InputGroup>
               </FormGroup>
               <div className="custom-control custom-control-alternative custom-checkbox">
@@ -136,17 +124,23 @@ const Login = () => {
                   className="custom-control-label"
                   htmlFor=" customCheckLogin"
                 >
-                  <span className="text-muted">Remember me</span>
+                  <span className="text-muted">
+                    Lưu lại thông tin đăng nhập
+                  </span>
                 </label>
               </div>
-              <div className="text-center">
+              <div className="d-flex justify-content-center align-items-center">
                 <Button
                   className="my-4"
                   color="primary"
                   type="button"
+                  disabled={
+                    (!formData.username && !formData.password) || loading
+                  }
                   onClick={handleSubmit}
                 >
-                  Sign in
+                  {loading && <Spinner color="light" className="mr-3" />}
+                  Đăng nhập
                 </Button>
               </div>
             </Form>

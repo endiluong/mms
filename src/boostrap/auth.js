@@ -48,13 +48,12 @@ export async function login(args) {
     const result = await axiosClient({
       method: "POST",
       url: `${process.env.REACT_APP_API_URL}/api/login`,
-      data: JSON.stringify({ payload }),
+      data: JSON.stringify(payload),
     });
 
     if (result.status !== 200) return false;
 
-    const { access_token = "" } = result.data;
-    return access_token;
+    return result.data;
   } catch (error) {
     console.log(error);
     return undefined;

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import * as style from "./index.module.scss";
-
 import { userState } from "atoms/user.atom";
 import { useSetRecoilState } from "recoil";
 
@@ -11,6 +9,7 @@ import { AvForm, AvField } from "availity-reactstrap-validation";
 
 import { login } from "boostrap/auth";
 import { setAccessToken } from "../../boostrap/auth";
+import { passwordValidator, userNameValidator } from "constants/form.consants";
 
 const Login = () => {
   const history = useHistory();
@@ -67,12 +66,7 @@ const Login = () => {
                 className="input-group-alternative"
                 placeholder="Tên đăng nhập"
                 type="text"
-                validate={{
-                  required: {
-                    value: true,
-                    errorMessage: "Vui lòng nhập tên đăng nhập",
-                  },
-                }}
+                validate={userNameValidator}
                 onChange={(event) =>
                   setFormData({ ...formData, username: event.target.value })
                 }
@@ -83,16 +77,7 @@ const Login = () => {
                 className="input-group-alternative"
                 name="password"
                 type="password"
-                validate={{
-                  required: {
-                    value: true,
-                    errorMessage: "Vui lòng nhập mật khẩu",
-                  },
-                  minLength: {
-                    value: 8,
-                    errorMessage: "Mật khẩu phải có ít nhất 8 ký tự",
-                  },
-                }}
+                validate={passwordValidator}
                 onChange={(event) =>
                   setFormData({ ...formData, password: event.target.value })
                 }

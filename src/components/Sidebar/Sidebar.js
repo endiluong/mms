@@ -36,11 +36,13 @@ import {
 } from "reactstrap";
 import { clearAccessToken } from "boostrap/auth";
 import { logout } from "boostrap/auth";
+import ChangePasswordModal from "views/Modal/ChangePasswordModal";
 
 var ps;
 
 const Sidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
+  const [openChangePassword, setOpenChangePassword] = useState(false);
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -139,10 +141,17 @@ const Sidebar = (props) => {
           <h6 className="navbar-heading text-muted">Demo Action</h6>
           {/* Navigation */}
           <Nav className="mb-md-3" navbar>
-            <NavItem>
+            <NavItem
+              onClick={() => setOpenChangePassword(true)}
+              style={{ cursor: "pointer" }}
+            >
               <NavLink>
                 <i className="ni ni-ui-04" />
                 Thay đổi mật khẩu
+                <ChangePasswordModal
+                  isOpen={openChangePassword}
+                  toggle={() => setOpenChangePassword(false)}
+                />
               </NavLink>
             </NavItem>
           </Nav>

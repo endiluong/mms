@@ -1,4 +1,3 @@
-import { useHistory } from "react-router";
 import axiosClient from "./axiosClient";
 
 export const AUTH_TOKEN = "access_token";
@@ -49,6 +48,25 @@ export async function login(args) {
     const result = await axiosClient({
       method: "POST",
       url: `${process.env.REACT_APP_API_URL}/api/login`,
+      data: JSON.stringify(payload),
+    });
+
+    if (result.status !== 200) return false;
+
+    return result.data;
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+}
+
+export async function changePassword(args) {
+  const { payload } = args;
+
+  try {
+    const result = await axiosClient({
+      method: "POST",
+      url: `${process.env.REACT_APP_API_URL}/api/user/change_password`,
       data: JSON.stringify(payload),
     });
 

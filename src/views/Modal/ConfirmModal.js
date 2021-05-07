@@ -1,4 +1,11 @@
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Spinner,
+} from "reactstrap";
 
 const ConfirmModal = (props) => {
   const {
@@ -6,6 +13,7 @@ const ConfirmModal = (props) => {
     toggle,
     title,
     content,
+    loading = false,
     okText = "Đồng ý",
     cancelText = "Hủy",
     okAction = () => {},
@@ -17,7 +25,8 @@ const ConfirmModal = (props) => {
       <ModalHeader toggle={toggle}>{title}</ModalHeader>
       <ModalBody>{content}</ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={okAction}>
+        <Button color="primary" onClick={okAction} disabled={loading}>
+          {loading && <Spinner color="light" className="mr-3" />}
           {okText}
         </Button>
         <Button color="secondary" onClick={cancelAction ? toggle : toggle}>

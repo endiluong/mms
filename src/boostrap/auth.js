@@ -1,3 +1,4 @@
+import { useHistory } from "react-router";
 import axiosClient from "./axiosClient";
 
 export const AUTH_TOKEN = "access_token";
@@ -26,11 +27,11 @@ export async function logout() {
   try {
     const result = await axiosClient({
       method: "GET",
-      url: `${process.env.REACT_APP_API_URL}/logout`,
+      url: `${process.env.REACT_APP_API_URL}/api/logout`,
     });
 
     if (result.status === 200) {
-      logout();
+      onLogout();
       return true;
     }
 

@@ -1,22 +1,6 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
-import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import { useLocation, Switch, Redirect } from "react-router-dom";
+import GuardedRoute from "boostrap/GuardedRoute";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
@@ -25,6 +9,8 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+
+require("dotenv").config();
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
@@ -40,7 +26,7 @@ const Admin = (props) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
         return (
-          <Route
+          <GuardedRoute
             path={prop.layout + prop.path}
             component={prop.component}
             key={key}

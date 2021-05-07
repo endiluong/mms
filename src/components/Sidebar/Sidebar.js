@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 /*eslint-disable*/
 import React, { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
@@ -51,6 +34,8 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { clearAccessToken } from "boostrap/auth";
+import { logout } from "boostrap/auth";
 
 var ps;
 
@@ -100,6 +85,14 @@ const Sidebar = (props) => {
       target: "_blank",
     };
   }
+
+  const logOut = async () => {
+    const result = await logout();
+    if (result) {
+      props.history.push("/auth");
+    }
+    props.history.push("/auth");
+  };
 
   return (
     <Navbar
@@ -259,10 +252,14 @@ const Sidebar = (props) => {
             </NavItem>
           </Nav>
           <Nav className="mb-md-3" navbar>
-            <NavItem className="active-pro active">
-              <NavLink href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adr-admin-sidebar">
-                <i className="ni ni-spaceship" />
-                Upgrade to PRO
+            <NavItem
+              className="active-pro active"
+              style={{ cursor: "pointer" }}
+              onClick={logOut}
+            >
+              <NavLink>
+                <i className="fas fa-sign-out-alt"></i>
+                Đăng xuất
               </NavLink>
             </NavItem>
           </Nav>

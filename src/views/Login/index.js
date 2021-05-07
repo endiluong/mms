@@ -20,7 +20,6 @@ const Login = () => {
 
   const handleSubmit = async (event, errors, values) => {
     if (!formData.username && !formData.password) return;
-    console.log("🚀 pass");
     event.preventDefault();
     setLoading(true);
     const result = await login({

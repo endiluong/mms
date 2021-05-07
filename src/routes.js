@@ -1,7 +1,6 @@
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
 import Login from "views/Login";
-import Register from "views/examples/Register.js";
 
 var routes = [
   {
@@ -25,12 +24,12 @@ var routes = [
     component: Login,
     layout: "/auth",
   },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: Register,
-    layout: "/auth",
-  },
+  // {
+  //   path: "/register",
+  //   name: "Register",
+  //   icon: "ni ni-circle-08 text-pink",
+  //   component: Register,
+  //   layout: "/auth",
+  // },
 ];
 export default routes;
